@@ -277,8 +277,7 @@
     v-model="dialogVisible"
     width="90%"
     :show-close="false"
-    :close-on-click-modal="false"
-    :close-on-press-escape="false"
+    :destroy-on-close="true"
   >
     <template #header>
       <img :src="bing" style="width: 120px" />
