@@ -9,19 +9,18 @@
         v-model="searchKey"
         @focus="focus"
         @blur="blur"
+        @keyup="onInputKeyup"
         class="search-input"
         placeholder="请输入想要搜索的内容哦～"
         :prefix-icon="Search"
         size="large"
+        :clearable="true"
       />
       <img
         :src="toukan"
         class="toukan"
         :style="{ opacity: isShowPic ? 0.2 : 0 }"
       />
-    </el-col>
-    <el-col :span="1" :offset="4">
-      <span class="iconfont icon-shouye1-copy home"></span>
     </el-col>
   </el-row>
   <div v-loading="isLoadingNews" class="nav-container">
@@ -158,7 +157,7 @@
         <el-card class="box-card">
           <template #header>
             <div class="card-header">
-              <img :src="nba" style="width: 18px" />
+              <img :src="nba" style="width: 16px" />
               <span>NBA</span>
             </div>
           </template>
@@ -274,14 +273,34 @@
     </el-row>
     <div id="commentBox"></div>
   </div>
+  <el-dialog
+    v-model="dialogVisible"
+    width="90%"
+    :show-close="false"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+  >
+    <template #header>
+      <img :src="bing" style="width: 120px" />
+    </template>
+    <template #footer>
+      <el-row>
+        <el-col :span="2" :offset="22">
+          <el-button @click="dialogVisible = false">关闭</el-button>
+        </el-col>
+      </el-row>
+    </template>
+    <iframe :src="iframeSrc" style="width: 100%; height: 600px"></iframe>
+  </el-dialog>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import valine from 'valine'
 import axios from 'axios'
 import { Search } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import request from '../utils/request'
+import bing from '../assets/images/bing.jpeg'
 import hot from '../assets/images/hot.png'
 import baidu from '../assets/images/baidu.png'
 import wb from '../assets/images/wb.png'
@@ -312,7 +331,11 @@ const juejinList = ref([])
 const shList = ref([])
 const yswList = ref([])
 const nbaList = ref([])
+const dialogVisible = ref(false)
 const isLoadingNews = ref(false)
+const iframeSrc = computed(() => {
+  return `https://cn.bing.com/search?q=${encodeURIComponent(searchKey.value)}`
+})
 
 const focus = () => {
   isShowPic.value = true
@@ -320,6 +343,12 @@ const focus = () => {
 const blur = () => {
   isShowPic.value = false
 }
+const onInputKeyup = (e) => {
+  if (e.code === 'Enter') {
+    dialogVisible.value = true
+  }
+}
+
 const getRecommondList = () => {
   isLoadingNews.value = true
   Promise.all([
@@ -534,6 +563,7 @@ onMounted(() => {
   .card-ul {
     max-height: 330px;
     overflow: auto;
+    overflow-x: hidden;
     &::-webkit-scrollbar {
       width: 0 !important;
     }
