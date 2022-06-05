@@ -1,8 +1,8 @@
 <template>
   <el-row align="middle" class="header">
     <el-col :span="5">
-      <img :src="logo" class="logo" />
-      <span class="title">资讯领航员</span>
+      <img :src="hot" class="logo" />
+      <span class="title">时事热点</span>
     </el-col>
     <el-col :span="13">
       <el-input
@@ -282,7 +282,7 @@ import axios from 'axios'
 import { Search } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import request from '../utils/request'
-import logo from '../assets/images/compass.png'
+import hot from '../assets/images/hot.png'
 import baidu from '../assets/images/baidu.png'
 import wb from '../assets/images/wb.png'
 import wx from '../assets/images/wx.png'
@@ -324,14 +324,14 @@ const getRecommondList = () => {
   isLoadingNews.value = true
   Promise.all([
     request({
-      url: 'http://api.tianapi.com/nethot/index',
+      url: 'https://api.tianapi.com/nethot/index',
       method: 'get',
       params: {
         key: apiKey
       }
     }),
     request({
-      url: 'http://api.tianapi.com/wxhottopic/index',
+      url: 'https://api.tianapi.com/wxhottopic/index',
       method: 'get',
       params: {
         key: apiKey
@@ -342,14 +342,14 @@ const getRecommondList = () => {
       method: 'get'
     }),
     request({
-      url: 'http://api.tianapi.com/douyinhot/index',
+      url: 'https://api.tianapi.com/douyinhot/index',
       method: 'get',
       params: {
         key: apiKey
       }
     }),
     request({
-      url: 'http://api.tianapi.com/topnews/index',
+      url: 'https://api.tianapi.com/topnews/index',
       method: 'get',
       params: {
         key: apiKey,
@@ -496,7 +496,7 @@ onMounted(() => {
   height: 64px;
   .logo {
     height: 28px;
-    margin: 0 15px 0 20px;
+    margin: 0 6px 0 20px;
   }
   .title {
     color: #4a4a4a;

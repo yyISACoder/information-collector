@@ -68,7 +68,8 @@ module.exports = {
     new webpack.ProgressPlugin(),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
-      title: 'Message Collector',
+      title: '时事热点',
+      favicon: path.join(__dirname,'..','src','assets','images','hot.png'),
       template: path.join(__dirname,'..','public','index.html')
     }),
     AutoImport({
