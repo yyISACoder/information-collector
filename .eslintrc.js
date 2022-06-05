@@ -6,11 +6,11 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        "plugin:vue/essential",
+        "plugin:vue/vue3-essential",// 解决vue3里报多根结点的问题
         'plugin:prettier/recommended'
     ],
     "parserOptions": {
-        "ecmaVersion": 13,
+        "ecmaVersion": 10,
         "sourceType": "module"
     },
     "plugins": [
