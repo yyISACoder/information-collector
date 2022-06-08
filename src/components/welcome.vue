@@ -23,6 +23,9 @@
       />
     </el-col>
     <el-col :span="6" style="justify-content: flex-end; padding-right: 20px">
+      <a href="https://carlblog.site/" target="_blank" rel="noreferrer">
+        <img :src="me" class="nav-logo me" />
+      </a>
       <a href="https://github.com/yyISACoder" target="_blank" rel="noreferrer">
         <svg
           height="32"
@@ -342,6 +345,7 @@ import tx from '../assets/images/tx.jpeg'
 import ysw from '../assets/images/ysw.jpeg'
 import nba from '../assets/images/nba.jpeg'
 import npm from '../assets/images/npm.jpeg'
+import me from '../assets/images/me.jpeg'
 import { apiKey } from '../utils/const'
 
 const searchKey = ref('')
@@ -560,6 +564,9 @@ onMounted(() => {
     height: 32px;
     border-radius: 50%;
     margin-left: 12px;
+  }
+  .nav-logo.me {
+    margin: 0 12px 0 0;
   }
   .title {
     color: #4a4a4a;
