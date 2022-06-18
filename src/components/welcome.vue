@@ -2,7 +2,7 @@
   <el-row align="middle" class="header">
     <el-col :span="5">
       <img :src="hot" class="logo" />
-      <span class="title">时事热点</span>
+      <span class="title">{{ $t('title') }}</span>
     </el-col>
     <el-col :span="13">
       <el-input
@@ -11,7 +11,7 @@
         @blur="blur"
         @keyup="onInputKeyup"
         class="search-input"
-        placeholder="请输入想要搜索的内容哦～"
+        :placeholder="$t('placeholder')"
         :prefix-icon="Search"
         size="large"
         :clearable="true"
@@ -52,6 +52,24 @@
       <a href="https://www.npmjs.com/~yinyue" target="_blank" rel="noreferrer">
         <img :src="npm" class="nav-logo" />
       </a>
+      <el-switch
+        v-model="switchVal"
+        style="margin: 0 6px 0 12px"
+        inline-prompt
+        :active-icon="Sunny"
+        :inactive-icon="Star"
+        inactive-color="#000"
+        @change="toggleDark"
+      />
+      <el-select
+        v-model="lang"
+        @change="onLangChange"
+        size="small"
+        style="width: 80px"
+      >
+        <el-option label="中文" value="zh-CN"> </el-option>
+        <el-option label="english" value="en"> </el-option>
+      </el-select>
     </el-col>
   </el-row>
   <div v-loading="isLoadingNews" class="nav-container">
@@ -61,7 +79,7 @@
           <template #header>
             <div class="card-header">
               <img :src="ysw" />
-              <span>央视网</span>
+              <span>{{ $t('ysw') }}</span>
             </div>
           </template>
           <ul class="card-ul">
@@ -79,7 +97,7 @@
           <template #header>
             <div class="card-header">
               <img :src="zhihu" />
-              <span>知乎</span>
+              <span>{{ $t('zh') }}</span>
             </div>
           </template>
           <ul class="card-ul">
@@ -97,7 +115,7 @@
           <template #header>
             <div class="card-header">
               <img :src="tt" />
-              <span>今日头条</span>
+              <span>{{ $t('jrtt') }}</span>
             </div>
           </template>
           <ul class="card-ul">
@@ -115,7 +133,7 @@
           <template #header>
             <div class="card-header">
               <img :src="tx" />
-              <span>腾讯新闻</span>
+              <span>{{ $t('txxw') }}</span>
             </div>
           </template>
           <ul class="card-ul">
@@ -135,7 +153,7 @@
           <template #header>
             <div class="card-header">
               <img :src="bilibili" />
-              <span>哔哩哔哩</span>
+              <span>{{ $t('bili') }}</span>
             </div>
           </template>
           <ul class="card-ul">
@@ -153,7 +171,7 @@
           <template #header>
             <div class="card-header">
               <img :src="juejin" />
-              <span>掘金</span>
+              <span>{{ $t('jj') }}</span>
             </div>
           </template>
           <ul class="card-ul" v-infinite-scroll="loadJuejin">
@@ -188,7 +206,7 @@
         <el-card class="box-card">
           <template #header>
             <div class="card-header">
-              <img :src="nba" style="width: 16px" />
+              <img :src="nba" />
               <span>NBA</span>
             </div>
           </template>
@@ -210,7 +228,7 @@
           <template #header>
             <div class="card-header">
               <img :src="wb" />
-              <span>微博</span>
+              <span>{{ $t('wb') }}</span>
             </div>
           </template>
           <ul class="card-ul">
@@ -235,7 +253,7 @@
               <img
                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsSAAALEgHS3X78AAADoUlEQVRIx8WXT2gcVRzHP++9mc3O/pnuJhttUpqCpVhp40VxDz2IHhooIhUq4kE96MEcol6sBxE8CEIrolDTINSDeij+ab310iJoVRTFf4RApNatYatt/m+S3Z0/73nYP9lks2Zj0viFYWYY3vu87+/Pmxn4nyRqF/Pf7lHAYPXYD8gtYmhgDBgBTrvZXFgHV6EfA4/cYqPngUfdbC6suRrcBihVxiAsh3NwG6A1PdsI3r+N4LsArOpNy0LSIXx3yWfsF5/CrCYWg4P9Fvcc7sDuEG2RVkk2gpvke4b3hz1OXSyh4ymSyS7sSASmBcXxRfwzMxztKfL8ay5u18YbYM0R168ajjw+zxtfKEhlUBEb32i8MCA0GieRIN23h0tiL4efKjL6pbdhcJPj/G9wdGiSvAdBsITRenmVStERjRJLJIgnk0ipUD29PHnyLz5L+ezut9sG1/rYABSmYeCJSa7MldcPlVI4iQROPI6SCnd+hs8/dbGd9fPuZnNiRaiPv1xoCwqgw5DFuTn6r0/hT04yoeHEi7NtO66Dv/6pzLlf59seWNNgYPP9zhQXYw57xxVBXrc1rp5jo+H4sRSx0CLwQv6+ETCe8/jhpseCMS0nuCx87lWC3tscHk51ELxbxHo1ui54RY7XkrdkOPtWgZMXFrhRXcABo9hlBD+LkN1IPkqnkX1xjDGY3CLO2xHkvtYt5mZzYl1wTTP5kGeenuJywWdA2wyHDgBTGLqkRB7cUYlfOUA4RZxTsYZ3XzO47c5P9yrOnuvmgZTNn2I5j10I0AY9sQjGgC3R1xTBBf9f59vQlmM7gvc+zBBfq2WmfZj1wRjE7Tbld3z0H60LbcN7XSwlGX6zk4VkM1xfK2JKIQAiE6E4VCQcDbcGDNB3t03mlTUqNzSY34uYkgYFotOm+FIZ74MQs1RbXeVktU1bJet+C/uYjf/Jqlz6BnOlBDstxA6J7LEIvtEEP0rIWMiE+u+Oa+p4IYq6TzU/0AaT99ETAWYJjJBgS0Q5gj2wiVDXZUP0hIP14BqBi0iEo0BaCCsCdhR7QKPu9DYX6pqEI4i+7hB8FeCf8SrFFJWIhAWuhXAt5D5F5IiPvCNYTlUtOJt1bx2ysA5ZmJsGfdVgSgKRFshdBtG54n2tG8FjwIHNugcQ3QLV3dhqTZviGA0uR7YC2qZGGsGnqXxs32qdr7IqYDebC8vOQ4+BeA4Ypd7mWyJdnXOI6l/ENhhsrX8A1lhFeWM56dEAAAAASUVORK5CYII="
               />
-              <span>搜狐新闻</span>
+              <span>{{ $t('sh') }}</span>
             </div>
           </template>
           <ul class="card-ul">
@@ -258,7 +276,7 @@
           <template #header>
             <div class="card-header">
               <img :src="wx" />
-              <span>微信</span>
+              <span>{{ $t('wx') }}</span>
             </div>
           </template>
           <ul class="card-ul">
@@ -274,7 +292,7 @@
           <template #header>
             <div class="card-header">
               <img :src="baidu" />
-              <span>百度</span>
+              <span>{{ $t('bd') }}</span>
             </div>
           </template>
           <ul class="card-ul">
@@ -289,8 +307,8 @@
         <el-card class="box-card">
           <template #header>
             <div class="card-header">
-              <img :src="dy" style="width: 27px" />
-              <span>抖音</span>
+              <img :src="dy" style="width: 28px" />
+              <span>{{ $t('dy') }}</span>
             </div>
           </template>
           <ul class="card-ul">
@@ -316,7 +334,9 @@
     <template #footer>
       <el-row>
         <el-col :span="2" :offset="22">
-          <el-button @click="dialogVisible = false">关闭</el-button>
+          <el-button @click="dialogVisible = false">{{
+            $t('close')
+          }}</el-button>
         </el-col>
       </el-row>
     </template>
@@ -324,7 +344,9 @@
   </el-dialog>
 </template>
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { Sunny, Star } from '@element-plus/icons-vue'
 import valine from 'valine'
 import axios from 'axios'
 import { Search } from '@element-plus/icons-vue'
@@ -348,6 +370,9 @@ import npm from '../assets/images/npm.jpeg'
 import me from '../assets/images/me.jpeg'
 import { apiKey } from '../utils/const'
 
+const { locale, t } = useI18n()
+const lang = ref('zh-CN')
+const switchVal = ref(true)
 const searchKey = ref('')
 const juejinCursor = ref('0')
 const isShowPic = ref(false)
@@ -369,6 +394,17 @@ const iframeSrc = computed(() => {
   return `https://cn.bing.com/search?q=${encodeURIComponent(searchKey.value)}`
 })
 
+const onLangChange = (val) => {
+  locale.value = val
+}
+const toggleDark = (val) => {
+  const html = document.querySelector('html')
+  if (val) {
+    html.removeAttribute('class')
+  } else {
+    html.setAttribute('class', 'dark')
+  }
+}
 const focus = () => {
   isShowPic.value = true
 }
@@ -542,18 +578,26 @@ onMounted(() => {
   getRecommondList()
   getYswJSONP()
 
-  new valine({
-    el: '#commentBox',
-    appId: 'oK2pE7mWECKa5Ny2ELGVXtCT-gzGzoHsz',
-    appKey: 'I2mCg7MUsrx7Y7PlP253NoLp',
-    placeholder:
-      '如果你有任何对于该应用的意见和想法，欢迎留言👏，我会据此做持续优化的😄'
-  })
+  watch(
+    lang,
+    () => {
+      new valine({
+        el: '#commentBox',
+        appId: 'oK2pE7mWECKa5Ny2ELGVXtCT-gzGzoHsz',
+        appKey: 'I2mCg7MUsrx7Y7PlP253NoLp',
+        lang: lang.value,
+        placeholder: t('commentPlaceholder')
+      })
+    },
+    {
+      immediate: true
+    }
+  )
 })
 </script>
 <style lang="scss" scoped>
 .header {
-  background-color: #f3f3f3;
+  background-color: var(--el-bg-color);
   height: 64px;
   .logo {
     height: 28px;
@@ -632,6 +676,26 @@ onMounted(() => {
   }
   .card-row {
     margin-bottom: 12px;
+  }
+}
+</style>
+<style lang="scss">
+@import 'element-plus/theme-chalk/dark/css-vars.css';
+
+html {
+  .nav-container .card-header span,
+  .nav-container .card-ul li a,
+  .nav-container .card-ul li,
+  .header .title {
+    color: var(--el-color-black);
+  }
+}
+html.dark {
+  .nav-container .card-header span,
+  .nav-container .card-ul li a,
+  .nav-container .card-ul li,
+  .header .title {
+    color: var(--el-color-white);
   }
 }
 </style>
