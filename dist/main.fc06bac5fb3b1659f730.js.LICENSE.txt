@@ -11,6 +11,24 @@ object-assign
 */
 
 /*!
+  * @intlify/core-base v9.1.10
+  * (c) 2022 kazuya kawaguchi
+  * Released under the MIT License.
+  */
+
+/*!
+  * @intlify/runtime v9.1.10
+  * (c) 2022 kazuya kawaguchi
+  * Released under the MIT License.
+  */
+
+/*!
+  * @intlify/vue-devtools v9.1.10
+  * (c) 2022 kazuya kawaguchi
+  * Released under the MIT License.
+  */
+
+/*!
   * vue-router v4.0.12
   * (c) 2021 Eduardo San Martin Morote
   * @license MIT
