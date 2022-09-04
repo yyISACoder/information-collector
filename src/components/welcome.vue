@@ -227,29 +227,6 @@
         <el-card class="box-card">
           <template #header>
             <div class="card-header">
-              <img :src="wb" />
-              <span>{{ $t('wb') }}</span>
-            </div>
-          </template>
-          <ul class="card-ul">
-            <li v-for="(item, index) in wbList" :key="item.word">
-              <span class="index">{{ index + 1 }}</span>
-              <a
-                :href="'https://s.weibo.com/weibo?q=%23' + item.word + '%23'"
-                target="_blank"
-                rel="noreferrer"
-                >{{ item.word }}</a
-              >
-            </li>
-          </ul>
-        </el-card>
-      </el-col>
-    </el-row>
-    <el-row :gutter="12" class="card-row" style="margin-bottom: 30px">
-      <el-col :span="6">
-        <el-card class="box-card">
-          <template #header>
-            <div class="card-header">
               <img
                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsSAAALEgHS3X78AAADoUlEQVRIx8WXT2gcVRzHP++9mc3O/pnuJhttUpqCpVhp40VxDz2IHhooIhUq4kE96MEcol6sBxE8CEIrolDTINSDeij+ab310iJoVRTFf4RApNatYatt/m+S3Z0/73nYP9lks2Zj0viFYWYY3vu87+/Pmxn4nyRqF/Pf7lHAYPXYD8gtYmhgDBgBTrvZXFgHV6EfA4/cYqPngUfdbC6suRrcBihVxiAsh3NwG6A1PdsI3r+N4LsArOpNy0LSIXx3yWfsF5/CrCYWg4P9Fvcc7sDuEG2RVkk2gpvke4b3hz1OXSyh4ymSyS7sSASmBcXxRfwzMxztKfL8ay5u18YbYM0R168ajjw+zxtfKEhlUBEb32i8MCA0GieRIN23h0tiL4efKjL6pbdhcJPj/G9wdGiSvAdBsITRenmVStERjRJLJIgnk0ipUD29PHnyLz5L+ezut9sG1/rYABSmYeCJSa7MldcPlVI4iQROPI6SCnd+hs8/dbGd9fPuZnNiRaiPv1xoCwqgw5DFuTn6r0/hT04yoeHEi7NtO66Dv/6pzLlf59seWNNgYPP9zhQXYw57xxVBXrc1rp5jo+H4sRSx0CLwQv6+ETCe8/jhpseCMS0nuCx87lWC3tscHk51ELxbxHo1ui54RY7XkrdkOPtWgZMXFrhRXcABo9hlBD+LkN1IPkqnkX1xjDGY3CLO2xHkvtYt5mZzYl1wTTP5kGeenuJywWdA2wyHDgBTGLqkRB7cUYlfOUA4RZxTsYZ3XzO47c5P9yrOnuvmgZTNn2I5j10I0AY9sQjGgC3R1xTBBf9f59vQlmM7gvc+zBBfq2WmfZj1wRjE7Tbld3z0H60LbcN7XSwlGX6zk4VkM1xfK2JKIQAiE6E4VCQcDbcGDNB3t03mlTUqNzSY34uYkgYFotOm+FIZ74MQs1RbXeVktU1bJet+C/uYjf/Jqlz6BnOlBDstxA6J7LEIvtEEP0rIWMiE+u+Oa+p4IYq6TzU/0AaT99ETAWYJjJBgS0Q5gj2wiVDXZUP0hIP14BqBi0iEo0BaCCsCdhR7QKPu9DYX6pqEI4i+7hB8FeCf8SrFFJWIhAWuhXAt5D5F5IiPvCNYTlUtOJt1bx2ysA5ZmJsGfdVgSgKRFshdBtG54n2tG8FjwIHNugcQ3QLV3dhqTZviGA0uR7YC2qZGGsGnqXxs32qdr7IqYDebC8vOQ4+BeA4Ypd7mWyJdnXOI6l/ENhhsrX8A1lhFeWM56dEAAAAASUVORK5CYII="
               />
@@ -270,7 +247,28 @@
             </li>
           </ul>
         </el-card>
+        <!-- <el-card class="box-card">
+          <template #header>
+            <div class="card-header">
+              <img :src="wb" />
+              <span>{{ $t('wb') }}</span>
+            </div>
+          </template>
+          <ul class="card-ul">
+            <li v-for="(item, index) in wbList" :key="item.word">
+              <span class="index">{{ index + 1 }}</span>
+              <a
+                :href="'https://s.weibo.com/weibo?q=%23' + item.word + '%23'"
+                target="_blank"
+                rel="noreferrer"
+                >{{ item.word }}</a
+              >
+            </li>
+          </ul>
+        </el-card> -->
       </el-col>
+    </el-row>
+    <el-row :gutter="12" class="card-row" style="margin-bottom: 30px">
       <el-col :span="6">
         <el-card class="box-card">
           <template #header>
@@ -355,7 +353,7 @@ import request from '../utils/request'
 import bing from '../assets/images/bing.jpeg'
 import hot from '../assets/images/hot.png'
 import baidu from '../assets/images/baidu.png'
-import wb from '../assets/images/wb.png'
+//import wb from '../assets/images/wb.png'
 import wx from '../assets/images/wx.png'
 import tt from '../assets/images/tt.png'
 import dy from '../assets/images/dy.jpeg'
@@ -378,7 +376,7 @@ const juejinCursor = ref('0')
 const isShowPic = ref(false)
 const baiduList = ref([])
 const wxList = ref([])
-const wbList = ref([])
+//const wbList = ref([])
 const dyList = ref([])
 const ttList = ref([])
 const zhihuList = ref([])
@@ -434,10 +432,10 @@ const getRecommondList = () => {
         key: apiKey
       }
     }),
-    request({
-      url: 'https://carlblog.site/weibo/ajax/statuses/hot_band',
-      method: 'get'
-    }),
+    // request({
+    //   url: 'https://carlblog.site/weibo/ajax/side/hotSearch',
+    //   method: 'get'
+    // }),
     request({
       url: 'https://api.tianapi.com/douyinhot/index',
       method: 'get',
@@ -506,7 +504,7 @@ const getRecommondList = () => {
       ([
         { data: baidu },
         { data: wx },
-        { data: wb },
+        // { data: wb },
         { data: dy },
         { data: tt },
         { data: zh },
@@ -526,7 +524,7 @@ const getRecommondList = () => {
         baiduList.value = baidu.newslist
 
         wxList.value = wx.newslist
-        wbList.value = wb.data.band_list
+        //wbList.value = wb.data.band_list
         dyList.value = dy.newslist
         ttList.value = tt.newslist
         bilibiliList.value = blibli.data.list
