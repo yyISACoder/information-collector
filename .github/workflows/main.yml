@@ -1,0 +1,49 @@
+name: cd
+on:
+  # 以主干的push事件作为触发条件
+  push:
+    branches: main
+jobs:
+  CD:
+    runs-on: ubuntu-latest
+    steps:
+      # 拉取代码
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      # 下载Node
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "19.x"
+      # 添加缓存，逻辑和CI Workflow里的一样
+      - name: Cache
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+          key: ${{runner.OS}}-${{hashFiles('**/package.json')}}
+      # 安装依赖。命中缓存则跳过此步
+      - name: Installing Dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: yarn install
+      - name: Building
+        run: |
+          yarn build
+      # 把制品上传到部署机器
+      - name: Upload to Deploy Server
+        uses: easingthemes/ssh-deploy@v4.1.8
+        env:
+          # SSH_PRIVATE_KEY为准备工作步骤三中生成密钥对里的私钥
+          SSH_PRIVATE_KEY: ${{ secrets.ALIPRIKEY }}
+          # 指定当前目录中要上传的内容
+          SOURCE: "public/"
+          # 指定上传到部署机器的哪个目录下
+          TARGET: "/var/webApps/news"
+          # 上传前指令，此处用于清空TARGET下的文件
+          ARGS: "-avzr --delete"
+          # REMOTE_HOST为机器的公网IP
+          REMOTE_HOST: ${{ secrets.ALIIP }}
+          # REMOTE_USER为登录机器时用到账号名
+          REMOTE_USER: ${{secrets.ALINAME}}
+          SCRIPT_BEFORE: ls
