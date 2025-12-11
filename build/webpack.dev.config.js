@@ -4,8 +4,11 @@ const baseConfig = require('./webpack.base.config')
 
 module.exports = merge(baseConfig, {
   mode: 'development',
-  devtool: 'eval-cheap-module-source-map',
+  devtool: 'source-map',
   devServer: {
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
     compress: true,
     port: 803
   }

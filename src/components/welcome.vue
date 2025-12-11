@@ -345,9 +345,9 @@
 import { ref, onMounted, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import valine from 'valine'
-import axios from 'axios'
+// import axios from 'axios'
 import { Search } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
+// import { ElMessage } from 'element-plus'
 import request from '../utils/request'
 import bing from '../assets/images/bing.jpeg'
 import hot from '../assets/images/hot.png'
@@ -451,35 +451,35 @@ const getRecommondList = () => {
         page: 1
       }
     }),
-    request({
-      url: 'https://carlblog.site/zhihu/api/v3/feed/topstory/hot-lists/total',
-      method: 'get',
-      params: {
-        key: apiKey,
-        limit: 50,
-        desktop: true
-      }
-    }),
-    request({
-      url: 'https://carlblog.site/blibli/x/web-interface/popular',
-      method: 'get',
-      params: {
-        ps: 50,
-        pn: 1
-      }
-    }),
-    request({
-      url: 'https://carlblog.site/juejin/recommend_api/v1/article/recommend_all_feed?aid=2608&uuid=6968122106504840743',
-      method: 'post',
-      data: {
-        cursor: juejinCursor.value,
-        limit: 20
-      }
-    }),
-    request({
-      url: 'https://i.news.qq.com/trpc.qqnews_web.kv_srv.kv_srv_http_proxy/list?sub_srv_id=24hours&srv_id=pc&offset=0&limit=50&strategy=1&ext={%22pool%22:[%22top%22],%22is_filter%22:7,%22check_type%22:true}',
-      method: 'get'
-    }),
+    // request({
+    //   url: 'https://carlblog.site/zhihu/api/v3/feed/topstory/hot-lists/total',
+    //   method: 'get',
+    //   params: {
+    //     key: apiKey,
+    //     limit: 50,
+    //     desktop: true
+    //   }
+    // }),
+    // request({
+    //   url: 'https://carlblog.site/blibli/x/web-interface/popular',
+    //   method: 'get',
+    //   params: {
+    //     ps: 50,
+    //     pn: 1
+    //   }
+    // }),
+    // request({
+    //   url: 'https://api.juejin.cn/content_api/v1/content/article_rank?category_id=1&type=hot&aid=2608&uuid=7458228132353738290&spider=0',
+    //   method: 'post',
+    //   data: {
+    //     cursor: juejinCursor.value,
+    //     limit: 20
+    //   }
+    // }),
+    // request({
+    //   url: 'https://i.news.qq.com/trpc.qqnews_web.kv_srv.kv_srv_http_proxy/list?sub_srv_id=24hours&srv_id=pc&offset=0&limit=50&strategy=1&ext={%22pool%22:[%22top%22],%22is_filter%22:7,%22check_type%22:true}',
+    //   method: 'get'
+    // }),
     request({
       url: 'https://cis.sohu.com/cis/feeds',
       method: 'post',
@@ -506,13 +506,24 @@ const getRecommondList = () => {
         // { data: wb },
         { data: dy },
         { data: tt },
-        { data: zh },
-        { data: blibli },
-        { data: juejin },
-        { data: tx },
+        // { data: zh },
+        // { data: blibli },
+        // { data: juejin },
+        // { data: tx },
         { data: sh },
         { data: nba }
       ]) => {
+        //wbList.value = wb.data.band_list
+        //bilibiliList.value = blibli.data.list
+        // juejinList.value = juejin.data
+        // juejinCursor.value = juejin.cursor
+        // txList.value = tx.data.list
+        // zh.data.forEach((item) => {
+        //   item.target.url = item.target.url.replace('api.', '')
+        //   item.target.url = item.target.url.replace('questions', 'question')
+        // })
+        // zhihuList.value = zh.data
+        debugger
         isLoadingNews.value = false
         baidu.newslist.forEach((item) => {
           item.brief = item.brief.replace('查看更多&gt;', '')
@@ -521,42 +532,35 @@ const getRecommondList = () => {
           }
         })
         baiduList.value = baidu.newslist
-
         wxList.value = wx.newslist
-        //wbList.value = wb.data.band_list
         dyList.value = dy.newslist
         ttList.value = tt.newslist
-        bilibiliList.value = blibli.data.list
-        juejinList.value = juejin.data
-        juejinCursor.value = juejin.cursor
-        txList.value = tx.data.list
+        juejinList.value = []
+        juejinCursor.value = []
+        txList.value = []
+        bilibiliList.value = []
+        zhihuList.value = []
         shList.value = sh['smpc.news-home.hotnews-daily'].data
         nbaList.value = nba.data
-
-        zh.data.forEach((item) => {
-          item.target.url = item.target.url.replace('api.', '')
-          item.target.url = item.target.url.replace('questions', 'question')
-        })
-        zhihuList.value = zh.data
       }
     )
     .catch(() => {
       isLoadingNews.value = false
     })
 }
-const getYswJSONP = () => {
-  axios(
-    'https://carlblog.site/ysw/2019/07/gaiban/cmsdatainterface/page/news_1.jsonp?cb=news'
-  )
-    .then(({ data }) => {
-      data = JSON.parse(data.replace(/^news\(/, '').replace(/\)$/, '')).data
-        .list
-      yswList.value = data
-    })
-    .catch(() => {
-      ElMessage.error('网络发生错误啦～')
-    })
-}
+// const getYswJSONP = () => {
+//   axios(
+//     'https://carlblog.site/ysw/2019/07/gaiban/cmsdatainterface/page/news_1.jsonp?cb=news'
+//   )
+//     .then(({ data }) => {
+//       data = JSON.parse(data.replace(/^news\(/, '').replace(/\)$/, '')).data
+//         .list
+//       yswList.value = data
+//     })
+//     .catch(() => {
+//       ElMessage.error('网络发生错误啦～')
+//     })
+// }
 const loadJuejin = () => {
   request({
     url: 'https://carlblog.site/juejin/recommend_api/v1/article/recommend_all_feed?aid=2608&uuid=6968122106504840743',
@@ -572,8 +576,9 @@ const loadJuejin = () => {
 }
 
 onMounted(() => {
+  debugger
   getRecommondList()
-  getYswJSONP()
+  // getYswJSONP()
 
   watch(
     lang,

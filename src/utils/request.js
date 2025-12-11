@@ -14,6 +14,7 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (res) => {
+    debugger
     if (
       res.data.code === 200 ||
       res.data.data ||
